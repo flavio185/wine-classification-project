@@ -1,11 +1,25 @@
 name: Deploy to AKS
 
 on:
-  workflow_
-# Permissões necessárias para a autenticação OIDC
-permissions:
-  id-token: write
-  contents: read
+  workflow_dispatch:
+    inputs:
+      MIN_REPLICAS:
+        description: 'Minimum number of replicas'
+        required: false
+        default: '1'
+      MAX_REPLICAS:
+        description: 'Maximum number of replicas'
+        required: false
+        default: '5'
+      ENTRY_POINT:
+        description: 'Entry point command to run the application'
+        required: false
+        default: 'uv run {{ cookiecutter.repo_name }}/run.py'
+      NAMESPACE:
+        description: 'Kubernetes namespace to deploy to'
+        required: false
+        default: 'default'
+
 
 jobs:
   deploy:
