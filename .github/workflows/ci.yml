@@ -25,5 +25,5 @@ jobs:
         run: make test
       
   artifact_upload:
-    uses: flavio185/reusable-workflow/.github/workflows/upload-to-s3.yml@main
+    uses: flavio185/reusable-workflows/.github/workflows/upload-to-s3.yml@main
     secrets: inherit
