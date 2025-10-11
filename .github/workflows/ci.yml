@@ -29,7 +29,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       AWS_REGION: ${{ steps.set_vars.outputs.AWS_REGION }}
-      AWS_S3_BUCKET: ${{ steps.set_vars.outputs.AWS_S3_BUCKET }}
     steps:
       - name: Set AWS_VARS
         id: set_vars
@@ -46,3 +45,28 @@ jobs:
     with:
       AWS_REGION: ${{ needs.set_vars.outputs.AWS_REGION }}
       AWS_S3_BUCKET: ${{ needs.set_vars.outputs.AWS_S3_BUCKET }}
+
+  call-cd:
+    needs: upload-artifact
+    uses: ./.github/workflows/cd.yml
+    secrets: inherit
+    with:
+      MIN_REPLICAS: 1
+      MAX_REPLICAS: 5
+      ENTRY_POINT: "uv run {{ cookiecutter.module_name }}/run.py"
+      NAMESPACE: app_ns
+
+  summary:
+    needs: [build, upload-artifact]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display Summary
+        run: |
+          echo "## CI Summary"
+          echo ""
+          echo "- Linting and tests passed successfully."
+          echo "- Artifacts have been uploaded to S3 bucket: ${{ needs.upload-artifact.outputs.AWS_S3_BUCKET }}"
+          echo ""
+          echo "### AWS Details"
+          echo "${{ needs.upload-artifacts.outputs  }}"
+          echo ""
