@@ -24,6 +24,6 @@ jobs:
       - name: Run tests with pytest
         run: make test
       
-      - name: Artifact upload
-        uses: flavio185/reusable-workflow/.github/workflows/deploy-to-k8s@main
-        secrets: inherit
+  artifact_upload:
+    uses: flavio185/reusable-workflow/.github/workflows/upload-to-s3@main
+    secrets: inherit
