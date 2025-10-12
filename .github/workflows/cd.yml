@@ -22,7 +22,6 @@ jobs:
     steps:
       - name: Deploy to AKS
         uses: flavio185/reusable-workflows/.github/workflows/deploy-to-k8s@main
-        secrets: inherit
         with:
           config_path: generated-manifests
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
