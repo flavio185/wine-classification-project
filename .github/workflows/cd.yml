@@ -26,7 +26,7 @@ jobs:
           echo "RESOURCE_GROUP=${{ vars.RESOURCE_GROUP }}" >> $GITHUB_OUTPUT
           echo "AKS_CLUSTER_NAME=${{ vars.AKS_CLUSTER_NAME }}" >> $GITHUB_OUTPUT
           echo "PACKAGE_NAME=${{ inputs.package_name }}" >> $GITHUB_OUTPUT
-          echo $"DEBUG AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}"
+          echo "DEBUG AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}"
 
   deploy:
     needs: set_vars
