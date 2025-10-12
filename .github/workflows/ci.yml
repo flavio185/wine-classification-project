@@ -36,6 +36,7 @@ jobs:
         run: |
           echo "AWS_REGION=${{ vars.AWS_REGION }}" >> $GITHUB_OUTPUT
           echo "AWS_S3_BUCKET=${{ vars.AWS_S3_BUCKET }}" >> $GITHUB_OUTPUT
+          echo "DEBUG AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}"
   
   build-and-upload-package:
     needs: [build, set_vars]
