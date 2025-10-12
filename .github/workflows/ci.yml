@@ -67,7 +67,7 @@ jobs:
           # Cria um diretório para os manifestos gerados
           mkdir -p generated-manifests
 
-          jobs_json=$(yq -o=json '.job' ${{ inputs.config_file }})
+          jobs_json=$(yq '.job' ${{ inputs.config_file }})
           num_jobs=$(echo "$jobs_json" | yq 'length')
           echo "Found $num_jobs jobs in ${{ inputs.config_file }}"
 
