@@ -1,6 +1,6 @@
 # wine-classification-project
 
-This project is for classification project of wine dataset
+This project is for classification project of wine datase
 
 ## Project Organization
 
