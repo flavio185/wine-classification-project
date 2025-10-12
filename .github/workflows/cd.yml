@@ -26,5 +26,6 @@ jobs:
     with:
       config_path: generated-manifests
       AWS_REGION: ${{ needs.set_vars.outputs.AWS_REGION }}
+      AWS_S3_BUCKET: ${{ needs.set_vars.outputs.AWS_S3_BUCKET }}
       RESOURCE_GROUP: ${{ needs.set_vars.outputs.RESOURCE_GROUP }}
       AKS_CLUSTER_NAME: ${{ needs.set_vars.outputs.AKS_CLUSTER_NAME }}
