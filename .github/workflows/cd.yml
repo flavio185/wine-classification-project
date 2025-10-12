@@ -1,4 +1,4 @@
-name: Deploy to AKS
+name: CD
 
 on:
   workflow_call:
