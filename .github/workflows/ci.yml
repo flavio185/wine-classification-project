@@ -37,6 +37,7 @@ jobs:
           echo "AWS_S3_BUCKET=${{ vars.AWS_S3_BUCKET }}" >> $GITHUB_OUTPUT
   
   build-and-upload-package:
+    needs: [build, set_vars]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code 
