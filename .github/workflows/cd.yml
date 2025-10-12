@@ -18,15 +18,12 @@ jobs:
           echo "AKS_CLUSTER_NAME=${{ vars.AKS_CLUSTER_NAME }}" >> $GITHUB_OUTPUT
 
   deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to AKS
-        uses: flavio185/reusable-workflows/.github/workflows/deploy-to-k8s@main
-        with:
-          config_path: generated-manifests
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ vars.AWS_REGION }}
-          RESOURCE_GROUP: ${{ vars.RESOURCE_GROUP }}
-          AKS_CLUSTER_NAME: ${{ vars.AKS_CLUSTER_NAME }}
-          KUBE_NAMESPACE: 'app_ns'
+    needs: set_vars
+    uses: flavio185/reusable-workflows/.github/workflows/deploy-to-k8s@main
+    with:
+      config_path: generated-manifests
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ needs.set_vars.outputs.AWS_REGION }}
+      RESOURCE_GROUP: ${{ needs.set_vars.outputs.RESOURCE_GROUP }}
+      AKS_CLUSTER_NAME: ${{ needs.set_vars.outputs.AKS_CLUSTER_NAME }}
