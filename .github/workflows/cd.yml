@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       AWS_REGION: ${{ steps.set_vars.outputs.AWS_REGION }}
+      AWS_S3_BUCKET: ${{ steps.set_vars.outputs.AWS_S3_BUCKET }}
+      RESOURCE_GROUP: ${{ steps.set_vars.outputs.RESOURCE_GROUP }}
+      AKS_CLUSTER_NAME: ${{ steps.set_vars.outputs.AKS_CLUSTER_NAME }}
+      PACKAGE_NAME: ${{ steps.set_vars.outputs.PACKAGE_NAME }}
     steps:
       - name: Set VARS
         id: set_vars
