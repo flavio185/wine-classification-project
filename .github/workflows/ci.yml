@@ -29,6 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       AWS_REGION: ${{ steps.set_vars.outputs.AWS_REGION }}
+      AWS_S3_BUCKET: ${{ steps.set_vars.outputs.AWS_S3_BUCKET }}
     steps:
       - name: Set AWS_VARS
         id: set_vars
@@ -108,13 +109,13 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ inputs.AWS_REGION }}
+          aws-region: ${{ needs.set_vars.outputs.AWS_REGION }}
 
       - name: Upload Package to S3
         run: |
           PACKAGE_NAME=${{ steps.package.outputs.PACKAGE_NAME }}
-          aws s3 cp $PACKAGE_NAME s3://${{ inputs.AWS_S3_BUCKET }}/raw_packages/$PACKAGE_NAME
-          echo "Successfully uploaded $PACKAGE_NAME to s3://${{ inputs.AWS_S3_BUCKET }}/raw_packages/"
+          aws s3 cp $PACKAGE_NAME s3://${{ needs.set_vars.outputs.AWS_S3_BUCKET }}/raw_packages/$PACKAGE_NAME
+          echo "Successfully uploaded $PACKAGE_NAME to s3://${{ needs.set_vars.outputs.AWS_S3_BUCKET }}/raw_packages/"
 
   call-cd:
     needs: [build-and-upload-package]
