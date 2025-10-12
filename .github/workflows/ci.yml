@@ -112,6 +112,10 @@ jobs:
     uses: ./.github/workflows/cd.yml
     with:
       package_name: ${{ needs.build-and-upload-package.outputs.PACKAGE_NAME }}
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
 
   summary:
     needs: [build, build-and-upload-package, call-cd]
