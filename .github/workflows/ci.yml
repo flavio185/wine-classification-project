@@ -114,7 +114,7 @@ jobs:
           echo "Successfully uploaded $PACKAGE_NAME to s3://${{ inputs.AWS_S3_BUCKET }}/raw_packages/"
 
   call-cd:
-    needs: build-and-upload-package
+    needs: [build-and-upload-package]
     uses: ./.github/workflows/cd.yml
 
   summary:
