@@ -20,10 +20,11 @@ jobs:
   deploy:
     needs: set_vars
     uses: flavio185/reusable-workflows/.github/workflows/deploy-to-k8s@main
-    with:
-      config_path: generated-manifests
+    secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    with:
+      config_path: generated-manifests
       AWS_REGION: ${{ needs.set_vars.outputs.AWS_REGION }}
       RESOURCE_GROUP: ${{ needs.set_vars.outputs.RESOURCE_GROUP }}
       AKS_CLUSTER_NAME: ${{ needs.set_vars.outputs.AKS_CLUSTER_NAME }}
