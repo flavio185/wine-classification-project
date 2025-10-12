@@ -39,6 +39,8 @@ jobs:
   build-and-upload-package:
     needs: [build, set_vars]
     runs-on: ubuntu-latest
+    outputs:
+      PACKAGE_NAME: ${{ steps.package.outputs.PACKAGE_NAME }}
     steps:
       - name: Checkout source code 
         uses: actions/checkout@v4
@@ -117,6 +119,8 @@ jobs:
   call-cd:
     needs: [build-and-upload-package]
     uses: ./.github/workflows/cd.yml
+    with:
+      package_name: ${{ needs.build-and-upload-package.outputs.PACKAGE_NAME }}
 
   summary:
     needs: [build, build-and-upload-package, call-cd]
