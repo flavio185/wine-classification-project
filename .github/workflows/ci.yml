@@ -56,7 +56,7 @@ jobs:
         env:
           AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET }}
           REPO_NAME: ${{ github.event.repository.name }}
-          COMMIT_SHA: $(echo ${{ github.sha }} | cut -c1-7)
+          COMMIT_SHA: ${{ github.sha }}
         run: |
           curl -o ray-job-template.yml https://raw.githubusercontent.com/flavio185/reusable-workflows/refs/heads/main/Ray/ray-job.yml
           envsubst < ray-job-template.yml > ray-job-interpolated.yaml
@@ -67,10 +67,10 @@ jobs:
         run: |
           # Cria um diretório para os manifestos gerados
           mkdir -p generated-manifests
-
-          jobs_json=$(yq '.job' ${{ inputs.config_file }})
+          config_file="conf/job_config.yml"
+          jobs_json=$(yq '.job' $config_file)
           num_jobs=$(echo "$jobs_json" | yq 'length')
-          echo "Found $num_jobs jobs in ${{ inputs.config_file }}"
+          echo "Found $num_jobs jobs in $config_file"
 
           for i in $(seq 0 $(($num_jobs - 1))); do
             job_config=$(echo "$jobs_json" | yq ".[$i]")
